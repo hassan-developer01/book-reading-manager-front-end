@@ -1,0 +1,14 @@
+.container-fluid {
+    background-size: cover;
+    background-position: 50%;
+}
+
+#authBox {
+    min-height: 100vh;
+}
+
+#formBox {
+    z-index: 9;
+    border-radius: 15px;
+    opacity: .969;
+}
