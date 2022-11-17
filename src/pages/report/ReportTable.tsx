@@ -1,10 +1,10 @@
 import React from 'react';
-import BookInterface from "@service/types/model/BookInterface";
 import {useNavigate} from "react-router-dom";
+import ReportInterface from "@service/types/model/report-interface";
 
-type BookTablePropsType = { list: BookInterface[];}
+type ReportTablePropsType = { list: ReportInterface[];}
 
-function BookTable({list: bookList}: BookTablePropsType) {
+function ReportTable({list: reportList}: ReportTablePropsType) {
   const navigate = useNavigate();
 
   function reportsBtnClickHandler(bookId: number) {
@@ -18,23 +18,27 @@ function BookTable({list: bookList}: BookTablePropsType) {
       <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Title</th>
-        <th scope="col">Number of Pages</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">Stop Date</th>
+        <th scope="col">To Page</th>
         <th scope="col">Description</th>
         <th scope="col">Action</th>
       </tr>
       </thead>
       <tbody>
       {
-        bookList.map(({id, title, number_of_pages, description, ref_url}, index) => {
+        reportList.reverse().map(({id, start_time, stop_time, description, to_page, finished}, index) => {
           return (
             <tr key={index}>
               <td>{++index}</td>
-              <td><a href={ref_url} target="_blank">{title}</a></td>
-              <td>{number_of_pages}</td>
+              <td>{start_time}</td>
+              <td>{stop_time}</td>
+              <td>{to_page}</td>
               <td>{description || '-'}</td>
               <td>
-                <button className="btn btn-primary" onClick={reportsBtnClickHandler(id)}>Go To Reports</button>
+                {
+                  !finished && <button className="btn btn-primary" onClick={reportsBtnClickHandler(id)}>Save</button>
+                }
               </td>
             </tr>
           )
@@ -45,4 +49,4 @@ function BookTable({list: bookList}: BookTablePropsType) {
   );
 }
 
-export default BookTable;
+export default ReportTable;
