@@ -9,7 +9,7 @@ import Register from "./auth/Register";
 import Logout from "./auth/Logout";
 import AboutUs from "./about-us";
 import Layouts from "@app/layouts/index";
-import Books from "@/pages/books/index";
+import Books from "@/pages/book/BooksIndex";
 import useLayout from "@hooks/use-layout";
 import {useEffect} from "react";
 import useAuth from "@hooks/use-auth";
