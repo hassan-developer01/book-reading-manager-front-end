@@ -2,10 +2,10 @@ import {useForm} from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import loginBG from "@img/login-bg.jpg"
-import useAuth from "@hooks/use-auth";
 import {useEffect} from "react";
 import "./auth.css";
 import useLayout from "@/app/hooks/use-layout";
+import useLogin from "@hooks/api/auth-api/use-login";
 
 type LoginFormDataType = {
   email: string,
@@ -14,14 +14,13 @@ type LoginFormDataType = {
 }
 
 function Login() {
+  const [, authenticate] = useLogin();
   const navigate = useNavigate();
   const {pathname} = useLocation();
-  const [,setAuth] = useAuth();
-  const [,enable] = useLayout();
   const {register, handleSubmit, formState: {errors}} = useForm<LoginFormDataType>({
     defaultValues: {
-      email: 'admin@email.com',
-      password: 'iamadmin',
+      email: 'user@email.com',
+      password: 'password',
       rememberMe: false
     }
   });
@@ -31,18 +30,9 @@ function Login() {
     if (pathname !== loginPath) navigate(loginPath)
   }, [pathname]);
 
-  const loginSuccessHandler = (data: any) => {
-    console.log('success login', data);
+  const loginSuccessHandler = ({email, password}: { email: string, password: string, rememberMe: boolean }) => {
+    authenticate(email, password, () => {}, () => {alert('username or password does not exist!');});
 
-    // TODO fetch login data in here
-    setAuth({
-      user: 'admin',
-      tokenType: 'jwt',
-      accessToken: 'token'
-    });
-
-    navigate('/');
-    enable();
   }
 
   const loginFailHandler = (data: any) => console.log('failed login', data);

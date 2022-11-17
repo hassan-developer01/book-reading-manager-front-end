@@ -1,4 +1,3 @@
-import "./styles/index.scss";
 import React, { Suspense } from "react";
 import Pages from "./pages";
 import RoutesWrapper from "@app/routes/RoutesWrapper";

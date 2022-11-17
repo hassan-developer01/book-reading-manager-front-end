@@ -10,9 +10,21 @@ import Logout from "./auth/Logout";
 import AboutUs from "./about-us";
 import Layouts from "@app/layouts/index";
 import Books from "@/pages/books/index";
+import useLayout from "@hooks/use-layout";
+import {useEffect} from "react";
+import useAuth from "@hooks/use-auth";
 
 function Pages() {
   useDocTitle();
+  const [{ hasToken }] = useAuth();
+  const [, enable, disable] = useLayout();
+
+  useEffect(() => {
+    if (hasToken)
+      enable();
+    else
+      disable();
+  }, [hasToken]);
 
   return (
       <Layouts>
